@@ -61,6 +61,24 @@ class badge(object):
             if current_time - self.last_boop_time > self.boop_cooldown:
                 self.isBooped = True
                 print("Boop Detected!")
+                
+                # ~~~~ Log Boop for later use ~~~~~
+                file_path = 'fs/boop_count.txt'
+
+                # Open the file in read mode
+                with open(file_path, 'r') as file:
+                    # Read the current number
+                    current_count = int(file.read().strip())
+                    
+                # Increment the current number
+                current_count += 1
+
+                # Open the file in write mode to update the number
+                with open(file_path, 'w') as file:
+                    # Write the updated number
+                    file.write(str(current_count))
+                    file.flush()
+                
                 for led in self.disp.cheak1:
                     led.hsv(0/360, 1.0, 200)
                 for led in self.disp.cheak2:
@@ -114,3 +132,4 @@ class badge(object):
 global t
 t = badge()
 t.run()
+
